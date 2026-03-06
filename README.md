@@ -20,7 +20,7 @@ A local file search engine with full-text capabilities. Built with [Tantivy](htt
 ### From Source
 
 ```bash
-git clone https://github.com/user/tamsaek.git
+git clone https://github.com/Indosaram/tamsaek.git
 cd tamsaek
 cargo build --release
 ```
