@@ -1,0 +1,34 @@
+[package]
+name = "tamsaek-core"
+version.workspace = true
+edition.workspace = true
+
+[features]
+default = []
+metadata = ["dep:rusqlite"]
+scoring = []  # RRF fusion and bonus scoring (uses chrono which is already a dependency)
+query-dsl = ["dep:nom", "dep:regex"]  # Query DSL parser with nom-based parsing
+vector = ["metadata", "dep:sqlite-vec"]  # Vector storage using sqlite-vec (depends on metadata for Database)
+
+[dependencies]
+tantivy.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+chrono.workspace = true
+parking_lot.workspace = true
+blake3 = "1.5"
+
+# Optional dependencies for metadata feature
+rusqlite = { version = "0.31", features = ["bundled"], optional = true }
+
+# Optional dependencies for query-dsl feature
+nom = { version = "7.1", optional = true }
+regex = { version = "1.10", optional = true }
+
+# Optional dependencies for vector feature
+sqlite-vec = { version = "0.1", optional = true }
+
+[dev-dependencies]
+# Test dependencies can be added here as needed

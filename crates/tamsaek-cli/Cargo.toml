@@ -1,0 +1,22 @@
+[package]
+name = "tamsaek-cli"
+version.workspace = true
+edition.workspace = true
+description = "CLI tool for local file search"
+
+[[bin]]
+name = "tamsaek"
+path = "src/main.rs"
+
+[dependencies]
+tamsaek-core = { path = "../tamsaek-core" }
+clap = { version = "4", features = ["derive"] }
+tokio = { version = "1", features = ["full", "macros", "rt-multi-thread"] }
+anyhow = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+dirs = "5"
+walkdir = "2"
+
+[dev-dependencies]
+tempfile = "3"

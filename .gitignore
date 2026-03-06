@@ -1,0 +1,35 @@
+# Build outputs
+/target/
+**/target/
+
+# Dependencies
+Cargo.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# Index data (user-specific)
+/index/
+
+# Environment
+.env
+.env.local
+
+# Debug files
+*.log
+*.pdb
+
+# Editor backup files
+*.bak
+*.orig
+
+# Temporary files
+*.tmp
+*.temp
