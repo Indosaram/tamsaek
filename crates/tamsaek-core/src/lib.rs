@@ -1,29 +1,3 @@
-//! Tamsaek Core - Full-text search library built on Tantivy.
-//!
-//! This crate provides a high-level API for indexing and searching documents
-//! using the Tantivy search engine.
-//!
-//! # Example
-//!
-//! ```rust
-//! use tamsaek_core::{TamsaekIndex, Document};
-//!
-//! # fn main() -> Result<(), tamsaek_core::TamsaekError> {
-//! // Create an in-memory index
-//! let index = TamsaekIndex::in_memory()?;
-//!
-//! // Add a document
-//! let doc = Document::new("1", "Hello World", "This is the content of my document.");
-//! index.add_document(&doc)?;
-//! index.commit()?;
-//!
-//! // Search for documents
-//! let results = index.search("content", 10)?;
-//! println!("Found {} results", results.len());
-//! # Ok(())
-//! # }
-//! ```
-
 mod document;
 mod error;
 mod index;
@@ -46,16 +20,22 @@ pub use error::{Result, TamsaekError};
 pub use index::{SchemaFields, TamsaekIndex};
 pub use search::SearchResult;
 
-#[cfg(feature = "metadata")]
-pub use metadata::{
-    Database, DatabaseConfig, DocumentStore, FileMetadataInfo, Schema, StoredDocument,
+pub use tamsaek_search_core::{
+    Document as SearchDocument, DocumentId, DocumentMetadata, ParseError, QueryType,
+    ScoreBreakdown, SearchBackend, SearchError, SearchHit, SearchResults, SourceType,
+};
+pub use tamsaek_storage::{
+    check_rebuild_needed, Database, DatabaseConfig, DocumentStore, FileMetadataInfo, IndexPolicy,
+    PathPrefixSortBy, RebuildDecision, Schema, SqliteVectorStore, StorageError, StorageResult,
+    StoredDocument, TantivyFts, TantivySearchResult, VectorSearchResult, VectorStore,
 };
 
-#[cfg(feature = "scoring")]
-pub use scoring::{BonusConfig, BonusScorer, RRFScorer, Scorable};
+pub use tamsaek_storage::rusqlite;
 
-#[cfg(feature = "query-dsl")]
-pub use query::{DateOp, Filter, Query, QueryParser, SizeOp};
+pub mod storage {
+    pub use tamsaek_storage::*;
+}
 
-#[cfg(feature = "vector")]
-pub use vector::{SqliteVectorStore, VectorSearchResult, VectorStore, EMBEDDING_DIM};
+pub mod search_core {
+    pub use tamsaek_search_core::*;
+}

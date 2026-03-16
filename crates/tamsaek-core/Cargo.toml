@@ -11,6 +11,8 @@ query-dsl = ["dep:nom", "dep:regex"]  # Query DSL parser with nom-based parsing
 vector = ["metadata", "dep:sqlite-vec"]  # Vector storage using sqlite-vec (depends on metadata for Database)
 
 [dependencies]
+tamsaek-storage = { path = "../tamsaek-storage" }
+tamsaek-search-core = { path = "../tamsaek-search-core" }
 tantivy.workspace = true
 serde.workspace = true
 serde_json.workspace = true
@@ -21,14 +23,14 @@ parking_lot.workspace = true
 blake3 = "1.5"
 
 # Optional dependencies for metadata feature
-rusqlite = { version = "0.31", features = ["bundled"], optional = true }
+rusqlite = { version = "0.33", features = ["bundled", "load_extension"], optional = true }
 
 # Optional dependencies for query-dsl feature
 nom = { version = "7.1", optional = true }
 regex = { version = "1.10", optional = true }
 
 # Optional dependencies for vector feature
-sqlite-vec = { version = "0.1", optional = true }
+sqlite-vec = { version = "0.1.7-alpha.2", optional = true }
 
 [dev-dependencies]
 # Test dependencies can be added here as needed

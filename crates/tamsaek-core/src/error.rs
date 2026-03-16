@@ -1,60 +1,55 @@
-//! Error types for the tamsaek-core library.
-
 use thiserror::Error;
 
-/// The main error type for tamsaek operations.
 #[derive(Error, Debug)]
 pub enum TamsaekError {
-    /// Error during index operations (create, open, commit, etc.)
     #[error("Index error: {0}")]
     Index(String),
 
-    /// Error during search operations
     #[error("Search error: {0}")]
     Search(String),
 
-    /// Invalid query syntax
     #[error("Invalid query: {0}")]
     InvalidQuery(String),
 
-    /// Error during document operations (add, delete, retrieve)
     #[error("Document error: {0}")]
     Document(String),
 
-    /// IO error
     #[error("IO error: {0}")]
     Io(#[from] std::io::Error),
 
-    #[cfg(feature = "metadata")]
     #[error("Database error: {0}")]
-    Database(#[from] rusqlite::Error),
+    Database(String),
 
-    #[cfg(feature = "query-dsl")]
-    #[error("Query parse error: {0}")]
+    #[error("Parse error: {0}")]
     Parse(String),
 
-    #[cfg(feature = "vector")]
     #[error("Vector operation failed: {0}")]
     Vector(String),
 }
 
-/// A convenience Result type for tamsaek operations.
 pub type Result<T> = std::result::Result<T, TamsaekError>;
 
-impl From<tantivy::TantivyError> for TamsaekError {
-    fn from(err: tantivy::TantivyError) -> Self {
-        TamsaekError::Index(err.to_string())
+impl From<tamsaek_storage::StorageError> for TamsaekError {
+    fn from(err: tamsaek_storage::StorageError) -> Self {
+        match err {
+            tamsaek_storage::StorageError::Database(e) => Self::Database(e.to_string()),
+            tamsaek_storage::StorageError::InvalidQuery(e) => Self::InvalidQuery(e),
+            tamsaek_storage::StorageError::Io(e) => Self::Io(e),
+            tamsaek_storage::StorageError::Tantivy(e) => Self::Search(e),
+            other => Self::Document(other.to_string()),
+        }
     }
 }
 
-impl From<tantivy::query::QueryParserError> for TamsaekError {
-    fn from(err: tantivy::query::QueryParserError) -> Self {
-        TamsaekError::Search(err.to_string())
-    }
-}
-
-impl From<tantivy::directory::error::OpenDirectoryError> for TamsaekError {
-    fn from(err: tantivy::directory::error::OpenDirectoryError) -> Self {
-        TamsaekError::Index(err.to_string())
+impl From<tamsaek_search_core::SearchError> for TamsaekError {
+    fn from(err: tamsaek_search_core::SearchError) -> Self {
+        match err {
+            tamsaek_search_core::SearchError::Storage(e) => Self::from(e),
+            tamsaek_search_core::SearchError::Parse(e) => Self::Parse(e.to_string()),
+            tamsaek_search_core::SearchError::InvalidQuery(e) => Self::InvalidQuery(e),
+            tamsaek_search_core::SearchError::NotFound(e) => Self::Document(e),
+            tamsaek_search_core::SearchError::Embedding(e) => Self::Vector(e),
+            tamsaek_search_core::SearchError::Index(e) => Self::Index(e),
+        }
     }
 }
