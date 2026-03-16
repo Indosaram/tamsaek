@@ -1,0 +1,28 @@
+[package]
+name = "tamsaek-storage"
+version.workspace = true
+edition = "2021"
+
+[dependencies]
+rusqlite.workspace = true
+tokio.workspace = true
+async-trait.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+parking_lot.workspace = true
+uuid.workspace = true
+blake3.workspace = true
+
+# Full-text search with incremental indexing
+tantivy = "0.22"
+
+# Unicode normalization for Korean/CJK filename search
+unicode-normalization = "0.1"
+
+sqlite-vec.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

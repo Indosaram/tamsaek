@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["crates/tamsaek-core", "crates/tamsaek-mcp", "crates/tamsaek-cli"]
+members = ["crates/tamsaek-core", "crates/tamsaek-storage", "crates/tamsaek-mcp", "crates/tamsaek-cli", "crates/tamsaek-search-core"]
 
 [workspace.package]
 version = "0.1.0"
@@ -16,6 +16,15 @@ thiserror = "2"
 tracing = "0.1"
 chrono = { version = "0.4", features = ["serde"] }
 parking_lot = "0.12"
+rusqlite = { version = "0.33", features = ["bundled", "load_extension"] }
+tokio = { version = "1", features = ["full"] }
+async-trait = "0.1"
+uuid = { version = "1", features = ["v4"] }
+blake3 = "1.5"
+sqlite-vec = "0.1.7-alpha.2"
+tempfile = "3"
+nom = "7"
+regex = "1"
 
 [profile.release]
 lto = "thin"

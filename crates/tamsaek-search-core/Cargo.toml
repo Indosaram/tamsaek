@@ -1,0 +1,21 @@
+[package]
+name = "tamsaek-search-core"
+version.workspace = true
+edition = "2021"
+
+[dependencies]
+tamsaek-storage = { path = "../tamsaek-storage" }
+tokio.workspace = true
+parking_lot.workspace = true
+async-trait.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+uuid.workspace = true
+nom.workspace = true
+regex.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
