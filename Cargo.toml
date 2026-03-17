@@ -25,6 +25,7 @@ sqlite-vec = "0.1.7-alpha.2"
 tempfile = "3"
 nom = "7"
 regex = "1"
+futures = "0.3"
 
 [profile.release]
 lto = "thin"

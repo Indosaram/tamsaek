@@ -39,3 +39,15 @@ pub mod storage {
 pub mod search_core {
     pub use tamsaek_search_core::*;
 }
+
+pub mod ai {
+    pub use tamsaek_search_core::ai::{
+        AgentAnswer, AgentResponse, AgentSearchResult, AiError, DateRange, EmbeddingClient,
+        EmbeddingConfig, EmbeddingModelSize, FileTypeCategory, IntentClassification,
+        LlmClient, LlmConfig, LlmQueryExpander, LlmResponse, LlmStream, Message, MessageRole,
+        ParsedFilter, QueryExpander, QueryIntent, QueryIntentClassifier, QueryParser, Reranker,
+        RerankerConfig, RerankerModelSize, Result as AiResult, SearchAgent, SearchBackend,
+        SearchMode, SortPreference, SourceFilter, StreamChunk, ToolCall, ToolResult,
+        DEFAULT_MODEL,
+    };
+}

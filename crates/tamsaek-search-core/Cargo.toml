@@ -16,6 +16,7 @@ tracing.workspace = true
 uuid.workspace = true
 nom.workspace = true
 regex.workspace = true
+futures.workspace = true
 
 [dev-dependencies]
 tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
